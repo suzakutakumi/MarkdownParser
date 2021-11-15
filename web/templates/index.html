@@ -1,0 +1,53 @@
+<html>
+
+<head>
+    <style>
+        .parent {
+            display: flex;
+        }
+
+        .child {
+            flex-grow: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class='parent'>
+        <div class="child">
+            <textarea cols="50" rows="10" id="bef" oninput="inputText()"></textarea>
+        </div>
+        <div class='child'>
+            結果
+            <div id="aft"></div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var gTimer;
+        function inputText() {
+            if (gTimer) { clearTimeout(gTimer); }
+            gTimer = setTimeout(inputEnd, 500);
+        }
+        function inputEnd() {
+            data = document.getElementById("bef").value
+            fetch("/test", {
+                method: 'POST',
+                body: data
+            }).then((res) => res.text()).then((text) => {
+                document.getElementById("aft").innerHTML = text
+            })
+        }/*
+        document.getElementById("btn").onclick = function () {
+            data = document.getElementById("bef").value
+            fetch("/test", {
+                method: 'POST',
+                body: data
+            }).then((res) => res.text()).then((text) => {
+                document.getElementById("aft").innerHTML = text
+            })
+        }*/
+    </script>
+</body>
+
+</html>
